@@ -18,13 +18,13 @@ logger = logging.getLogger(__name__)
 auth_bp = Blueprint('auth', __name__)
 DATABASE = 'backend/users.db'
 
-# Configuración de email
+# Configuración de email - USAR VARIABLES DE ENTORNO EN PRODUCCIÓN
 EMAIL_CONFIG = {
     'smtp_server': 'smtp.gmail.com',
     'smtp_port': 587,
-    'sender_email': 'scriptluisch@gmail.com',
-    'sender_password': 'czgbxznprzxbigad',
-    'app_url': 'http://localhost:5000'
+    'sender_email': os.environ.get('EMAIL_SENDER', 'scriptluisch@gmail.com'),
+    'sender_password': os.environ.get('EMAIL_PASSWORD', 'czgbxznprzxbigad'),
+    'app_url': os.environ.get('APP_URL', 'http://localhost:5000')  # ← Se actualizará después
 }
 
 def init_db():

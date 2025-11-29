@@ -4,6 +4,7 @@ Servidor principal de AutoScan IA - Versión Profesional
 """
 import os
 import logging
+import sys
 from datetime import datetime
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
@@ -209,11 +210,16 @@ def internal_error(e):
         "status": "error"
     }), 500
 
-# Al final de app.py, cambia esto:
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
+    # Configuración para producción
+    port = int(os.environ.get('PORT', 10000))
+    host = os.environ.get('HOST', '0.0.0.0')
+    
+    print(f"🚀 Iniciando AutoScan IA en {host}:{port}")
+    print(f"📍 Python: {sys.version}")
+    
     app.run(
-        host='0.0.0.0',
+        host=host,
         port=port,
         debug=False
     )
