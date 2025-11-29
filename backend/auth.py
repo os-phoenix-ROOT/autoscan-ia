@@ -24,7 +24,7 @@ EMAIL_CONFIG = {
     'smtp_port': 587,
     'sender_email': os.environ.get('EMAIL_SENDER', 'scriptluisch@gmail.com'),
     'sender_password': os.environ.get('EMAIL_PASSWORD', 'czgbxznprzxbigad'),
-    'app_url': os.environ.get('APP_URL', 'http://localhost:5000')  # ← Se actualizará después
+    'app_url': os.environ.get('APP_URL', 'https://autoscan-ia.onrender.com')
 }
 
 def init_db():
