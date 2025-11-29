@@ -1,0 +1,22 @@
+# Entornos virtuales
+venv/
+env/
+.venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Base de datos
+backend/users.db
+
+# Temporales
+backend/temp_uploads/*
+!backend/temp_uploads/.gitkeep
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log

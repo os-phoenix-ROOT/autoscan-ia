@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AutoScan IA</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <nav class="dashboard-nav">
+            <div class="nav-brand">
+                <img src="img/logo.png" alt="AutoScan IA" class="logo">
+                <span>AutoScan IA</span>
+            </div>
+            
+            <div class="nav-actions">
+                <div class="user-menu">
+                    <div class="user-info">
+                        <span class="user-name" id="userName">Usuario</span>
+                        <span class="user-plan">Plan Básico</span>
+                    </div>
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item"><i class="fas fa-user"></i> Mi Perfil</a>
+                        <a href="#" class="dropdown-item"><i class="fas fa-cog"></i> Configuración</a>
+                        <a href="#" class="dropdown-item"><i class="fas fa-chart-bar"></i> Estadísticas</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <div class="dashboard-container">
+            <!-- Welcome Section -->
+            <section class="welcome-section">
+                <div class="welcome-content">
+                    <h1>Analizador de Daños Vehiculares</h1>
+                    <p>Sube fotos de tu vehículo desde 4 ángulos diferentes para obtener un análisis completo de daños</p>
+                </div>
+                <div class="usage-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="analysesCount">0</span>
+                            <span class="stat-label">Análisis Realizados</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-number" id="remainingAnalyses">3</span>
+                            <span class="stat-label">Análisis Restantes</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Upload Section -->
+            <section class="upload-section">
+                <div class="upload-container">
+                    <div class="upload-header">
+                        <h2>Subir Imágenes del Vehículo</h2>
+                        <button class="btn-help" onclick="showInstructionsModal()">
+                            <i class="fas fa-question-circle"></i>
+                            Instrucciones
+                        </button>
+                    </div>
+
+                    <div class="upload-grid">
+                        <!-- Frontal -->
+                        <div class="upload-card" data-angle="frontal">
+                            <div class="upload-preview">
+                                <i class="fas fa-car-front"></i>
+                                <span class="angle-label">Vista Frontal</span>
+                                <img id="previewFrontal" class="preview-image" style="display: none;">
+                                <button class="btn-remove" onclick="removeImage('frontal')" style="display: none;">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <label for="fileFrontal" class="upload-btn">
+                                <i class="fas fa-upload"></i>
+                                <span>Subir Frontal</span>
+                                <input type="file" id="fileFrontal" accept="image/*" class="file-input" data-angle="frontal">
+                            </label>
+                        </div>
+
+                        <!-- Lateral Derecho -->
+                        <div class="upload-card" data-angle="lateral-derecho">
+                            <div class="upload-preview">
+                                <i class="fas fa-car-side"></i>
+                                <span class="angle-label">Lateral Derecho</span>
+                                <img id="previewLateralDerecho" class="preview-image" style="display: none;">
+                                <button class="btn-remove" onclick="removeImage('lateral-derecho')" style="display: none;">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <label for="fileLateralDerecho" class="upload-btn">
+                                <i class="fas fa-upload"></i>
+                                <span>Subir Lateral Der.</span>
+                                <input type="file" id="fileLateralDerecho" accept="image/*" class="file-input" data-angle="lateral-derecho">
+                            </label>
+                        </div>
+
+                        <!-- Lateral Izquierdo -->
+                        <div class="upload-card" data-angle="lateral-izquierdo">
+                            <div class="upload-preview">
+                                <i class="fas fa-car-side" style="transform: scaleX(-1);"></i>
+                                <span class="angle-label">Lateral Izquierdo</span>
+                                <img id="previewLateralIzquierdo" class="preview-image" style="display: none;">
+                                <button class="btn-remove" onclick="removeImage('lateral-izquierdo')" style="display: none;">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <label for="fileLateralIzquierdo" class="upload-btn">
+                                <i class="fas fa-upload"></i>
+                                <span>Subir Lateral Izq.</span>
+                                <input type="file" id="fileLateralIzquierdo" accept="image/*" class="file-input" data-angle="lateral-izquierdo">
+                            </label>
+                        </div>
+
+                        <!-- Trasero -->
+                        <div class="upload-card" data-angle="trasero">
+                            <div class="upload-preview">
+                                <i class="fas fa-car-rear"></i>
+                                <span class="angle-label">Vista Trasera</span>
+                                <img id="previewTrasero" class="preview-image" style="display: none;">
+                                <button class="btn-remove" onclick="removeImage('trasero')" style="display: none;">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <label for="fileTrasero" class="upload-btn">
+                                <i class="fas fa-upload"></i>
+                                <span>Subir Trasero</span>
+                                <input type="file" id="fileTrasero" accept="image/*" class="file-input" data-angle="trasero">
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="upload-actions">
+                        <button class="btn-primary btn-large" id="analyzeBtn" onclick="analyzeVehicle()" disabled>
+                            <i class="fas fa-search"></i>
+                            Analizar Vehículo
+                        </button>
+                        <button class="btn-secondary" onclick="clearAllImages()">
+                            <i class="fas fa-trash"></i>
+                            Limpiar Todo
+                        </button>
+                    </div>
+
+                    <div class="upload-progress" id="uploadProgress" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <span class="progress-text" id="progressText">Preparando análisis...</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="resultsSection" style="display: none;">
+                <div class="results-header">
+                    <h2>Resultados del Análisis</h2>
+                    <div class="results-actions">
+                        <button class="btn-secondary" onclick="exportResults()">
+                            <i class="fas fa-download"></i>
+                            Exportar Reporte
+                        </button>
+                        <button class="btn-secondary" onclick="newAnalysis()">
+                            <i class="fas fa-plus"></i>
+                            Nuevo Análisis
+                        </button>
+                    </div>
+                </div>
+
+                <div class="results-grid" id="resultsGrid">
+                    <!-- Los resultados se insertarán aquí dinámicamente -->
+                </div>
+
+                <div class="conclusion-card" id="conclusionCard">
+                    <!-- La conclusión se insertará aquí dinámicamente -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Instructions Modal -->
+    <div id="instructionsModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3><i class="fas fa-info-circle"></i> Instrucciones para el Análisis</h3>
+                <button class="modal-close" onclick="closeModal('instructionsModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="instructions-content">
+                    <div class="instruction-section">
+                        <h4>📋 Requisitos de las Imágenes</h4>
+                        <ul>
+                            <li><strong>Formato:</strong> JPG, PNG o WEBP</li>
+                            <li><strong>Calidad:</strong> Imágenes nítidas y bien iluminadas</li>
+                            <li><strong>Ángulos:</strong> 4 vistas requeridas (frontal, lateral derecho, lateral izquierdo, trasero)</li>
+                            <li><strong>Tamaño:</strong> Mínimo 500x500 pixels</li>
+                        </ul>
+                    </div>
+
+                    <div class="instruction-section">
+                        <h4>🎯 Guía de Ángulos</h4>
+                        <div class="angles-guide">
+                            <div class="angle-guide-item">
+                                <div class="angle-icon">🚗</div>
+                                <div>
+                                    <strong>Vista Frontal:</strong> Foto directa del frente del vehículo
+                                </div>
+                            </div>
+                            <div class="angle-guide-item">
+                                <div class="angle-icon">↗️</div>
+                                <div>
+                                    <strong>Lateral Derecho:</strong> Perfil completo del lado derecho
+                                </div>
+                            </div>
+                            <div class="angle-guide-item">
+                                <div class="angle-icon">↖️</div>
+                                <div>
+                                    <strong>Lateral Izquierdo:</strong> Perfil completo del lado izquierdo
+                                </div>
+                            </div>
+                            <div class="angle-guide-item">
+                                <div class="angle-icon">🚙</div>
+                                <div>
+                                    <strong>Vista Trasera:</strong> Foto directa de la parte posterior
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="instruction-section">
+                        <h4>⚠️ Limitaciones de la IA</h4>
+                        <div class="limitations-list">
+                            <div class="limitation-item">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>Solo detecta daños visibles externos</span>
+                            </div>
+                            <div class="limitation-item">
+                                <i class="fas fa-tools"></i>
+                                <span>No reemplaza una inspección mecánica profesional</span>
+                            </div>
+                            <div class="limitation-item">
+                                <i class="fas fa-eye-slash"></i>
+                                <span>No detecta daños internos o estructurales ocultos</span>
+                            </div>
+                            <div class="limitation-item">
+                                <i class="fas fa-sun"></i>
+                                <span>La precisión depende de la calidad de las fotos</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="instruction-section warning">
+                        <h4><i class="fas fa-shield-alt"></i> Recomendación de Seguridad</h4>
+                        <p>Para una evaluación completa del vehículo, recomendamos siempre una inspección profesional que incluya revisión mecánica, eléctrica y de chasis.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" onclick="closeModal('instructionsModal')">Entendido</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="modal">
+        <div class="modal-content">
+            <div class="loading-content">
+                <div class="loading-spinner"></div>
+                <h3>Analizando Imágenes</h3>
+                <p id="loadingMessage">Procesando vehículo con IA...</p>
+                <div class="loading-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="loadingProgressFill"></div>
+                    </div>
+                    <span class="progress-text" id="loadingProgressText">0%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
